@@ -5,6 +5,7 @@ namespace OOP.Notification
     {
         void Send(string to, string message);
         NotificationType GetNotificationType();
+        bool ActiveProvider(List<NotificationType> notificationType);
     }
 }
 

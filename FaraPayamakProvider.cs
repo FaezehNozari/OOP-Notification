@@ -1,4 +1,5 @@
 ﻿using System;
+
 namespace OOP.Notification
 {
     public class FaraPayamakProvider : INotificationProvider
@@ -11,6 +12,12 @@ namespace OOP.Notification
         public NotificationType GetNotificationType()
         {
             return NotificationType.Farapayamak;
+        }
+
+        public bool ActiveProvider(List<NotificationType> notificationType)
+        {
+            var provider = this.GetNotificationType();
+            return notificationType.ToList().Contains(provider);
         }
     }
 }
