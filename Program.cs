@@ -15,29 +15,53 @@ var lastProvider = NotificationType.Rahyab;
 
 var lastPhoneNumbers = new List<string>();
 
-//TODO:For masoud :D
-foreach (var item in notificationTypes)
-{
-    var currentProvider = GetProvider(item);
+var faraPayamak = new FaraPayamakProvider();
+var rahyab = new RahyabProvider();
 
-    foreach (var p in phoneNumbers.Take(x))
+if (faraPayamak.Status() == false)
+{
+    foreach (var p in phoneNumbers)
     {
         lastPhoneNumbers.Add(p);
-        messageService.Send(p, message, new List<NotificationType>() { currentProvider });
+        messageService.Send(p, message, new List<NotificationType>() { lastProvider });
     }
-    lastProvider = currentProvider;
-
-    //TODO:For marie
-    foreach (var p2 in phoneNumbers.Except(lastPhoneNumbers))
-    {
-        //TODO:For marie
-        var currentProvider2 = GetProvider(lastProvider);
-        messageService.Send(p2, message, new List<NotificationType>() { currentProvider2 });
-    }
-
-    break;
 }
 
+else if (rahyab.Status() == false)
+{
+    lastProvider = NotificationType.Farapayamak;
+    foreach (var p2 in phoneNumbers)
+    {
+        lastPhoneNumbers.Add(p2);
+        messageService.Send(p2, message, new List<NotificationType>() { lastProvider });
+    }
+}
+
+else
+{
+    //TODO:For masoud :D
+    foreach (var item in notificationTypes)
+    {
+        var currentProvider = GetProvider(item);
+
+        foreach (var p in phoneNumbers.Take(x))
+        {
+            lastPhoneNumbers.Add(p);
+            messageService.Send(p, message, new List<NotificationType>() { currentProvider });
+        }
+        lastProvider = currentProvider;
+
+        //TODO:For marie
+        foreach (var p2 in phoneNumbers.Except(lastPhoneNumbers))
+        {
+            //TODO:For marie
+            var currentProvider2 = GetProvider(lastProvider);
+            messageService.Send(p2, message, new List<NotificationType>() { currentProvider2 });
+        }
+
+        break;
+    }
+}
 Console.ReadKey();
 
 static NotificationType GetProvider(NotificationType notificationType)

@@ -19,6 +19,12 @@ namespace OOP.Notification
             var provider = this.GetNotificationType();
             return notificationType.ToList().Contains(provider);
         }
+
+        public bool Status()
+        {
+            return true;
+
+        }
     }
 }
 
